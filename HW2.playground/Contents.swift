@@ -13,12 +13,13 @@ import UIKit
  */
 //The task 1.1
 
-let property1: Float = 3.14, property2: Float = 42.0
+let property1: Float = 3.14,
+    property2: Float = 42.0
 //Хотелось бы избавиться от 2-х повторений типа Float
 
 //The task 1.2
 
-let property3 = Double (property1 + property2)
+let property3 = Double(property1 + property2)
 
 //The task 1.3
 
@@ -84,22 +85,34 @@ let monthOfBirth = 10
 let yearOfBirth = 1994
 //:The task 3.4
 //создаем необходимые свойства (день, месяц, год) на момент выполнения задания 6.11.2020, скобки в коде указаны для лучшего понимания структуры вычисления:
-let dayOfToday = 6, monthOfToday = 11, yearOfToday = 2020
+let dayOfToday = 6,
+    monthOfToday = 11,
+    yearOfToday = 2020
 
-//вычисляем количество лет с учетом, что ДР в текущем году исполнен (хотя может быть и не исполнен, что учтено ниже в коде):
-let numberOfYears = yearOfToday - yearOfBirth
+//создаем необходимые свойства:
+let secondsInDays = 60 * 60 * 24, //секунд в сутках
+    daysInMonths = 30,  //суток в месяце
+    monthInYears = 12  //месяцев в году
 
-//вычисляем количество месяцев с учетом месяцев года рождения и текущего года:
-let numberOfMonths = (12 - monthOfBirth) + ((numberOfYears - 1) * 12) + (monthOfToday - 1)
+//вычисляем количество дней до дня рождения от РХ:
+let daysToBirthday = yearOfBirth * monthInYears *  daysInMonths + monthOfBirth * daysInMonths + dayOfBirth
 
-//вычисляем количество дней с учетом количества дней в месяце 30, а также учетом дней в месяце года рождения и текущего года (часы в текущих сутках не учтены, т.е. время 00:00):
-let numberOfDays = (30 - dayOfBirth) + (numberOfMonths * 30) + (dayOfToday - 1)
+//вычисляем количество дней до текущей даты от РХ:
+let daysToToday = yearOfToday * monthInYears *  daysInMonths +  monthOfToday * daysInMonths + dayOfToday
 
-//вычисляем количество секунд:
-let numberOfSeconds = numberOfDays * 24 * 60 * 60
+//прошло дней:
+let daysPassed = daysToToday - daysToBirthday
 
+//месяцев прошло:
+let monthsPassed = daysPassed / daysInMonths
+
+//лет прошло:
+let yearsPassed = monthsPassed / monthInYears
+
+//секунд прошло:
+let secondsPassed = daysPassed * secondsInDays
 //:The task 3.5
-print ("\(numberOfYears) years, \(numberOfMonths) months, \(numberOfDays) days and \(numberOfSeconds) seconds have passed since my birth")
+print ("\(yearsPassed) years, \(monthsPassed) months, \(daysPassed) days and \(secondsPassed) seconds have passed since my birth")
 //:The task 3.6
 
 if monthOfBirth > 0  && monthOfBirth <= 3 {
@@ -127,9 +140,35 @@ if monthOfBirth > 0  && monthOfBirth <= 3 {
  */
 //:The task 4
 
-let rubleInitialDepositA2020: Double = 20_000_000, interestNumberRateB2020 = 4.25, numberOfYearsC2030: Double = 10
+//let rubleInitialDepositA2020: Double = 20_000_000, interestNumberRateB2020 = 4.25, numberOfYearsC2030: Double = 10
+//
+///*использована формула простых процентов (средства размещаются на длительный срок и сумма большая), целесообразна в случае начисления процентов в конце срока размещения депозита */
+//let quantityInterestOnDepositX2030 = ((rubleInitialDepositA2020 * (interestNumberRateB2020 / 100 + 1) * numberOfYearsC2030) / rubleInitialDepositA2020) * 100
+//
+//print ("Выплата по депозиту суммой \(Int(rubleInitialDepositA2020)) рублей (ставка \(interestNumberRateB2020)%) через \(Int(numberOfYearsC2030)) лет будет \(quantityInterestOnDepositX2030)%")
 
-/*использована формула простых процентов (средства размещаются на длительный срок и сумма большая), целесообразна в случае начисления процентов в конце срока размещения депозита */
-let quantityInterestOnDepositX2030 = ((rubleInitialDepositA2020 * (interestNumberRateB2020 / 100 + 1) * numberOfYearsC2030) / rubleInitialDepositA2020) * 100
+/// Сумма депозита
 
-print ("Выплата по депозиту суммой \(Int(rubleInitialDepositA2020)) рублей (ставка \(interestNumberRateB2020)%) через \(Int(numberOfYearsC2030)) лет будет \(quantityInterestOnDepositX2030)%")
+let depositAmount: Double = 20_000_000
+
+/// Процентная ставка. 4.25%
+
+let interestRatePercent: Double = 4.25
+
+/// Кол-во лет депозита
+
+let yearsOfRepayment = 10
+
+ 
+
+let profitPercent = interestRatePercent * Double(yearsOfRepayment)
+
+ 
+
+// Опционально: посчитать сумму профита
+
+let profitSum = depositAmount * (interestRatePercent / 100) * Double(yearsOfRepayment)
+
+ 
+
+print("Выплата по депозиту суммой \(depositAmount) (ставка \(interestRatePercent)%) через \(yearsOfRepayment) лет будет \(profitPercent)% (сумма прибыли: \(profitSum))")
